@@ -1,7 +1,7 @@
 #coding=utf8
 
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for
 from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from wtforms import StringField, SubmitField
@@ -15,6 +15,7 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+
 
 class NameForm(FlaskForm):
 
@@ -31,9 +32,9 @@ def index():
 	form = NameForm()
 
 	if form.validate_on_submit():
-		name = form.name.data
-		form.name.data = ''
-	return render_template('index.html', form=form, name=name)
+		session['name'] = form.name.data
+		return redirect(url_for('index'))
+	return render_template('index.html', form=form, name=session.get('name'))
 
 if __name__ == '__main__':
 	manager.run()
