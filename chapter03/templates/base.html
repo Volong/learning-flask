@@ -1,8 +1,26 @@
+
+
 {# 继承 bootstrap 中的 base.html #}
 {% extends "bootstrap/base.html" %}
 
+
 {# 重写 base.html 中 title 标签的内容 #}
 {% block title %}Flasky{% endblock %}
+
+{# 引入 moment.js #}
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}"
+type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}"
+type="image/x-icon"> 
+
+{% endblock %}
 
 
 {# 重写 base.html 中 navbar 标签的内容 #}
